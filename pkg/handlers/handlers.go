@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"aws-lambda-in-go-lang/pkg/user"
 	"net/http"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -55,7 +56,7 @@ func CreateUser(req events.APIGatewayProxyRequest, tableName string,
 	return apiResponse(http.StatusCreated, result)
 }
 
-func UpdateUser(rew events.APIGatewayProxyRequest, tableName string,
+func UpdateUser(req events.APIGatewayProxyRequest, tableName string,
 	dynaClient dynamodbiface.DynamoDBAPI) (
 	*events.APIGatewayProxyResponse,
 	error,

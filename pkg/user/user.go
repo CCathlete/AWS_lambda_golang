@@ -1,6 +1,7 @@
 package user
 
 import (
+	"aws-lambda-in-go-lang/pkg/validators"
 	"encoding/json"
 	"errors"
 
@@ -51,6 +52,8 @@ func FetchUser(email, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
 	if err != nil {
 		return nil, errors.New(ErrorFaliedToUnmarshhalRecord)
 	}
+
+	return item, nil
 }
 
 func FetchUsers(tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
@@ -66,7 +69,7 @@ func FetchUsers(tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
 	}
 	item := new([]User)
 	err = dynamodbattribute.UnmarshalListOfMaps(result.Items, item)
-	return item, nil
+	return item, err
 }
 
 func CreateUser(req events.APIGatewayProxyRequest, tableName string,
